@@ -2,7 +2,7 @@
 require_once('../dbcon.php');
 
 try {
-  $stmt = $db_connection->query("SELECT * FROM riddles WHERE roomId = 3");
+  $stmt = $db_connection->query("SELECT * FROM riddles WHERE roomId = 1");
   $riddles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
   die("Databasefout: " . $e->getMessage());
@@ -20,6 +20,7 @@ try {
 </head>
 
 <body>
+  <h1>Team: ...</h1>
 
   <div class="container">
     <?php foreach ($riddles as $index => $riddle) : ?>
