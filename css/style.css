@@ -50,3 +50,48 @@ button a {
   font-weight: bold;
   font-size: 1rem;
 }
+
+
+/*Stars background */
+
+.stars {
+  width: 100%;
+  height: 100%;
+  background: transparent url("https://www.transparenttextures.com/patterns/stardust.png") repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -3;
+  animation: moveStars 60s linear infinite;
+  opacity: 0.6;
+}
+
+.stars2 {
+  width: 100%;
+  height: 100%;
+  background: transparent url("https://www.transparenttextures.com/patterns/tiny-grid.png") repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -2;
+  animation: moveStars 120s linear infinite;
+  opacity: 0.4;
+}
+
+.stars3 {
+  width: 100%;
+  height: 100%;
+  background: transparent url("https://www.transparenttextures.com/patterns/dark-matter.png") repeat;
+  position: fixed;
+  top: 0;
+  left: 0;
+  z-index: -1;
+  animation: moveStars 180s linear infinite;
+  opacity: 0.3;
+}
+
+/* Animación */
+@keyframes moveStars {
+  from { background-position: 0 0; }
+  to { background-position: -10000px 10000px; }
+}
