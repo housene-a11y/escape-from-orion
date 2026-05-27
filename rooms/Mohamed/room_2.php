@@ -1,10 +1,11 @@
-<?php require_once '../../dbcon.php'; ?>
+<?php
+require_once '../../dbcon.php';
 
 try {
-  $stmt = $db_connection->query("SELECT * FROM riddles WHERE roomId = 2");
-  $riddles = $stmt->fetchAll(PDO::FETCH_ASSOC);
+    $stmt = $db_connection->query("SELECT * FROM riddles WHERE roomId = 1");
+    $riddles = $stmt->fetchAll(PDO::FETCH_ASSOC);
 } catch (PDOException $e) {
-  die("Databasefout: " . $e->getMessage());
+    die("Databasefout: " . $e->getMessage());
 }
 ?>
 
