@@ -90,8 +90,63 @@ button a {
   opacity: 0.3;
 }
 
-/* Animación */
 @keyframes moveStars {
   from { background-position: 0 0; }
   to { background-position: -10000px 10000px; }
+}
+
+
+/* --- VERLIES PAGINA (ROOD) --- */
+
+body.verlies {
+  background: radial-gradient(circle at center, #3a0000 0%, #000000 80%);
+  color: #ff4d4d;
+}
+
+.alert {
+  animation: flash 1s infinite;
+  font-size: 2.2rem;
+  font-weight: bold;
+  margin-top: 40px;
+}
+
+@keyframes flash {
+  0% { color: #ff0000; }
+  50% { color: #ff8080; }
+  100% { color: #ff0000; }
+}
+
+.shake {
+  animation: shake 0.3s infinite;
+  display: inline-block;
+}
+
+@keyframes shake {
+  0% { transform: translate(0px, 0px); }
+  25% { transform: translate(2px, -2px); }
+  50% { transform: translate(-2px, 2px); }
+  75% { transform: translate(2px, 2px); }
+  100% { transform: translate(0px, 0px); }
+}
+
+/* Botón */
+.retry-btn {
+  margin-top: 30px;
+  padding: 12px 25px;
+  background: #8b0000;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.retry-btn:hover {
+  background: #b30000;
+  transform: scale(1.05);
+}
+
+.retry-btn a {
+  color: white;
+  text-decoration: none;
+  font-weight: bold;
 }
