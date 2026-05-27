@@ -1,5 +1,4 @@
-<?php
-require_once('../dbcon.php');
+<?php require_once '../../dbcon.php'; ?>
 
 try {
   $stmt = $db_connection->query("SELECT * FROM riddles WHERE roomId = 1");
