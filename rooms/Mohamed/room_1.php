@@ -133,10 +133,6 @@ $images = [
 
 <body>
 
-  <div class="stars"></div>
-  <div class="stars2"></div>
-  <div class="stars3"></div>
-
   <div class="room-header">
     <h1>⚠️ Kamer 1 – Controlesystemen</h1>
     <p class="team-label">Team: <strong><?php echo htmlspecialchars($teamName); ?></strong></p>
