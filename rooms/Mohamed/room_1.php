@@ -42,8 +42,8 @@ $images = [
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     body {
-    background: url('../../img/kamer1.jpg') no-repeat center center fixed;
-    background-size: cover;
+      background: url('https://images.unsplash.com/photo-1581822261290-991b38693d1b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background-size: cover;
     }
 
     /* Puzzel box hover — icoon zichtbaar */
@@ -125,7 +125,6 @@ $images = [
       font-size: 0.9rem;
     }
   </style>
-
 </head>
 
 <body>
