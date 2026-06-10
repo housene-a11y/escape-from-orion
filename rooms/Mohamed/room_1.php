@@ -46,7 +46,10 @@ $images = [
     background: url('../../img/kamer1.jpg') no-repeat center center fixed;
     background-size: cover;
     }
-
+    
+    .room-header h1 {
+     color: #4fc3f7;
+}
     /* Puzzel box hover — icoon zichtbaar */
     .box {
       position: relative;
