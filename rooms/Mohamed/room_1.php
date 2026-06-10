@@ -42,7 +42,7 @@ $images = [
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     body {
-    background: url('../../img/kamer1-bg.jpg') no-repeat center center fixed;
+    background: url('../../img/kamer1.jpg') no-repeat center center fixed;
     background-size: cover;
     }
 
@@ -125,7 +125,7 @@ $images = [
       font-size: 0.9rem;
     }
   </style>
-  
+
 </head>
 
 <body>
