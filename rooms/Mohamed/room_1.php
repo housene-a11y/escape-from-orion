@@ -42,7 +42,7 @@ $images = [
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     body {
-      background: url('https://images.unsplash.com/photo-1581822261290-991b38693d1b?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
       background-size: cover;
     }
 
