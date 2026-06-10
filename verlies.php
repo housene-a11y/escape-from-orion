@@ -27,7 +27,7 @@
   <h2>Je hebt verloren.</h2>
 
   <button class="retry-btn">
-    <a href="index.php">Probeer opnieuw</a>
+    <a href="reset.php">Probeer opnieuw</a>
   </button>
 
 </body>
