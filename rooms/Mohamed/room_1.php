@@ -42,9 +42,13 @@ $images = [
   <link rel="stylesheet" href="../../css/style.css">
   <style>
     body {
-      background: url('https://images.unsplash.com/photo-1451187580459-43490279c0fa?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
+      background: url('https://images.unsplash.com/photo-1614728894747-a83421e2b9c9?auto=format&fit=crop&w=1920&q=80') no-repeat center center fixed;
       background-size: cover;
     }
+
+    .room-header h1 {
+    text-shadow: 0 0 10px #000, 0 0 20px #000, 2px 2px 4px #000;
+   }
 
     /* Puzzel box hover — icoon zichtbaar */
     .box {
