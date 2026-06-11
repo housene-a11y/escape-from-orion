@@ -151,6 +151,11 @@ $images = [
 
     document.getElementById('progress').textContent = solvedCount;
 
+    // Directe check bij het laden van de pagina (voor het geval ze alles al af hebben)
+    if (solvedCount >= totalRiddles && totalRiddles > 0) {
+        window.location.href = '../Housene/room_2.php';
+    }
+
     function updateTimer() {
       const elapsed   = Math.floor(Date.now() / 1000) - startTime;
       const remaining = Math.max(0, timeLimit - elapsed);
@@ -231,10 +236,9 @@ $images = [
 
           setTimeout(() => {
             closeModal();
+            // Als alle puzzels zijn opgelost, stuur ze door naar kamer 2
             if (solvedCount >= totalRiddles) {
-              setTimeout(() => {
                 window.location.href = '../Housene/room_2.php';
-              }, 800);
             }
           }, 1000);
         });
