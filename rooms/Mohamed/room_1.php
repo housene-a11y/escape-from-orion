@@ -1,4 +1,7 @@
 <?php
+// auteur: Mohamed
+// functie: kamer 1 escape room
+
 session_start();
 
 if (!isset($_SESSION['start_time'])) {
@@ -9,22 +12,15 @@ if (!isset($_SESSION['solved_room1'])) {
     $_SESSION['solved_room1'] = [];
 }
 
-require_once '../../dbcon.php';
+require_once '../../functions.php';
 
-try {
-    $stmt = $db_connection->query("SELECT * FROM riddles WHERE roomId = 1");
-    $riddles = $stmt->fetchAll(PDO::FETCH_ASSOC);
-} catch (PDOException $e) {
-    die("Databasefout: " . $e->getMessage());
-}
-
-$teamName = isset($_SESSION['team_name']) ? $_SESSION['team_name'] : 'Onbekend Team';
+$riddles    = getRiddlesByRoom(1);
+$teamName   = isset($_SESSION['team_name']) ? $_SESSION['team_name'] : 'Onbekend Team';
 $totalRiddles = count($riddles);
-$timeLimit = 600;
-$elapsed = time() - $_SESSION['start_time'];
-$remaining = max(0, $timeLimit - $elapsed);
+$timeLimit  = 600;
+$elapsed    = time() - $_SESSION['start_time'];
+$remaining  = max(0, $timeLimit - $elapsed);
 
-// Afbeelding per riddle (op volgorde van roomId=1 riddles)
 $images = [
     '../../img/panel.png',
     '../../img/radar.png',
@@ -34,103 +30,49 @@ $images = [
 
 <!DOCTYPE html>
 <html lang="nl">
-
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>ECLIPS‑7 – Kamer 1</title>
   <link rel="stylesheet" href="../../css/style.css">
   <style>
-
     body {
-    background: url('../../img/kamer1.jpg') no-repeat center center fixed;
-    background-size: cover;
+      background: url('../../img/kamer1.jpg') no-repeat center center fixed;
+      background-size: cover;
     }
-    
-    .room-header h1 {
-     color: #4fc3f7;
-}
-    /* Puzzel box hover — icoon zichtbaar */
-    .box {
-      position: relative;
-      flex-direction: column;
-      gap: 10px;
-    }
-
+    .room-header h1 { color: #4fc3f7; }
+    .box { position: relative; flex-direction: column; gap: 10px; }
     .box .img-icon {
-      display: none;
-      font-size: 1.4rem;
-      background: rgba(0,0,0,0.5);
-      border-radius: 50%;
-      padding: 4px 8px;
-      cursor: pointer;
-      transition: transform 0.2s;
-      z-index: 10;
+      display: none; font-size: 1.4rem;
+      background: rgba(0,0,0,0.5); border-radius: 50%;
+      padding: 4px 8px; cursor: pointer;
+      transition: transform 0.2s; z-index: 10;
     }
-
-    .box:hover .img-icon {
-      display: inline-block;
-    }
-
-    .box .img-icon:hover {
-      transform: scale(1.2);
-    }
-
-    /* Lightbox */
+    .box:hover .img-icon { display: inline-block; }
+    .box .img-icon:hover { transform: scale(1.2); }
     .lightbox {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0,0,0,0.92);
-      z-index: 500;
-      align-items: center;
-      justify-content: center;
-      flex-direction: column;
+      display: none; position: fixed; inset: 0;
+      background: rgba(0,0,0,0.92); z-index: 500;
+      align-items: center; justify-content: center; flex-direction: column;
     }
-
-    .lightbox.active {
-      display: flex;
-    }
-
+    .lightbox.active { display: flex; }
     .lightbox img {
-      max-width: 90vw;
-      max-height: 80vh;
-      border-radius: 12px;
-      border: 2px solid #0288d1;
+      max-width: 90vw; max-height: 80vh;
+      border-radius: 12px; border: 2px solid #0288d1;
       box-shadow: 0 0 40px rgba(79, 195, 247, 0.4);
     }
-
     .lightbox-close {
-      position: absolute;
-      top: 20px;
-      right: 30px;
-      font-size: 2rem;
-      color: white;
-      cursor: pointer;
-      background: rgba(0,0,0,0.5);
-      border: none;
-      border-radius: 50%;
-      width: 44px;
-      height: 44px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      position: absolute; top: 20px; right: 30px;
+      font-size: 2rem; color: white; cursor: pointer;
+      background: rgba(0,0,0,0.5); border: none;
+      border-radius: 50%; width: 44px; height: 44px;
+      display: flex; align-items: center; justify-content: center;
       transition: background 0.2s;
     }
-
-    .lightbox-close:hover {
-      background: rgba(255,0,0,0.5);
-      transform: none;
-    }
-
-    .lightbox-caption {
-      color: #90caf9;
-      margin-top: 12px;
-      font-size: 0.9rem;
-    }
+    .lightbox-close:hover { background: rgba(255,0,0,0.5); transform: none; }
+    .lightbox-caption { color: #90caf9; margin-top: 12px; font-size: 0.9rem; }
   </style>
 </head>
-
 <body>
 
   <div class="room-header">
@@ -140,7 +82,9 @@ $images = [
       <span>⏱️ Tijd over: </span>
       <span id="timer" class="timer-display"><?php echo gmdate("i:s", $remaining); ?></span>
     </div>
-    <p class="progress-label">Opgelost: <span id="progress"><?php echo count($_SESSION['solved_room1']); ?></span> / <?php echo $totalRiddles; ?></p>
+    <p class="progress-label">
+      Opgelost: <span id="progress"><?php echo count($_SESSION['solved_room1']); ?></span> / <?php echo $totalRiddles; ?>
+    </p>
   </div>
 
   <p class="room-intro">
@@ -148,12 +92,12 @@ $images = [
   </p>
 
   <div class="container">
-    <?php foreach ($riddles as $index => $riddle) : 
+    <?php foreach ($riddles as $index => $riddle) :
       $solved = in_array($riddle['id'], $_SESSION['solved_room1']);
-      $img = $images[$index] ?? null;
+      $img    = $images[$index] ?? null;
     ?>
-    <div 
-      class="box box<?php echo $index + 1; ?> <?php echo $solved ? 'solved' : ''; ?>" 
+    <div
+      class="box box<?php echo $index + 1; ?> <?php echo $solved ? 'solved' : ''; ?>"
       data-index="<?php echo $index; ?>"
       data-id="<?php echo $riddle['id']; ?>"
       data-riddle="<?php echo htmlspecialchars($riddle['riddle']); ?>"
@@ -174,10 +118,8 @@ $images = [
     <?php endforeach; ?>
   </div>
 
-  <!-- Overlay modal -->
   <div class="overlay" id="overlay" onclick="closeModal()"></div>
 
-  <!-- Modal -->
   <div class="modal" id="modal">
     <button class="modal-close" onclick="closeModal()">✕</button>
     <h2>🛸 Puzzel</h2>
@@ -191,7 +133,6 @@ $images = [
     <p id="feedback" class="feedback"></p>
   </div>
 
-  <!-- Lightbox -->
   <div class="lightbox" id="lightbox" onclick="closeLightbox()">
     <button class="lightbox-close" onclick="closeLightbox()">✕</button>
     <img id="lightbox-img" src="" alt="Puzzel afbeelding">
@@ -199,24 +140,23 @@ $images = [
   </div>
 
   <script>
-    const riddles = <?php echo json_encode($riddles); ?>;
-    const solvedIds = <?php echo json_encode($_SESSION['solved_room1']); ?>;
-    const timeLimit = <?php echo $timeLimit; ?>;
-    const startTime = <?php echo $_SESSION['start_time']; ?>;
+    const riddles    = <?php echo json_encode($riddles); ?>;
+    const solvedIds  = <?php echo json_encode($_SESSION['solved_room1']); ?>;
+    const timeLimit  = <?php echo $timeLimit; ?>;
+    const startTime  = <?php echo $_SESSION['start_time']; ?>;
     const totalRiddles = <?php echo $totalRiddles; ?>;
 
     let currentIndex = null;
-    let solvedCount = solvedIds.length;
+    let solvedCount  = solvedIds.length;
 
     document.getElementById('progress').textContent = solvedCount;
 
-    // ---- TIMER ----
     function updateTimer() {
-      const elapsed = Math.floor(Date.now() / 1000) - startTime;
+      const elapsed   = Math.floor(Date.now() / 1000) - startTime;
       const remaining = Math.max(0, timeLimit - elapsed);
-      const minutes = Math.floor(remaining / 60).toString().padStart(2, '0');
-      const seconds = (remaining % 60).toString().padStart(2, '0');
-      const timerEl = document.getElementById('timer');
+      const minutes   = Math.floor(remaining / 60).toString().padStart(2, '0');
+      const seconds   = (remaining % 60).toString().padStart(2, '0');
+      const timerEl   = document.getElementById('timer');
       timerEl.textContent = `${minutes}:${seconds}`;
       if (remaining <= 60) timerEl.style.color = '#ff4444';
       if (remaining <= 0) {
@@ -227,10 +167,8 @@ $images = [
     const timerInterval = setInterval(updateTimer, 1000);
     updateTimer();
 
-    // ---- BOX CLICK ----
     function handleBoxClick(event, index, solved) {
       if (solved) return;
-      // Als op het 🔍 icoon geklikt
       if (event.target.classList.contains('img-icon')) {
         event.stopPropagation();
         const box = event.target.closest('.box');
@@ -240,7 +178,6 @@ $images = [
       }
     }
 
-    // ---- MODAL ----
     function openModal(index) {
       currentIndex = index;
       const riddle = riddles[index];
@@ -259,7 +196,6 @@ $images = [
       currentIndex = null;
     }
 
-    // ---- LIGHTBOX ----
     function openLightbox(src) {
       document.getElementById('lightbox-img').src = src;
       document.getElementById('lightbox').classList.add('active');
@@ -269,13 +205,12 @@ $images = [
       document.getElementById('lightbox').classList.remove('active');
     }
 
-    // ---- ANTWOORD ----
     function checkAnswer() {
       if (currentIndex === null) return;
-      const riddle = riddles[currentIndex];
+      const riddle     = riddles[currentIndex];
       const userAnswer = document.getElementById('answer-input').value.trim().toLowerCase();
       const correctAnswer = riddle.answer.trim().toLowerCase();
-      const feedback = document.getElementById('feedback');
+      const feedback   = document.getElementById('feedback');
 
       if (userAnswer === correctAnswer) {
         feedback.textContent = '✅ Correct! Systeem hersteld.';
@@ -310,7 +245,6 @@ $images = [
       }
     }
 
-    // ---- HINT ----
     function showHint() {
       if (currentIndex === null) return;
       const hintEl = document.getElementById('hint-text');
