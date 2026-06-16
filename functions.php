@@ -1,5 +1,5 @@
 <?php
-// auteur: Mohamed
+// auteur: Housene
 // functie: algemene functies CRUD
 
 require_once 'config.php';
