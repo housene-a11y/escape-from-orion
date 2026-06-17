@@ -84,8 +84,7 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
     <div class="admin-section">
       <h2>🧩 Riddles beheren</h2>
       <div class="admin-links">
-        <a href="read_riddles.php">📋 Alle riddles bekijken</a>
-        <a href="create_riddle.php">➕ Nieuwe riddle toevoegen</a>
+      <a href="riddles.php">🧩 Riddles beheren</a>
       </div>
     </div>
 
