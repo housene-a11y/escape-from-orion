@@ -81,4 +81,31 @@ if (!isset($_SESSION['role']) || $_SESSION['role'] !== 'admin') {
   <div class="admin-container">
     <h1>⚙️ Admin Panel — ECLIPS‑7</h1>
 
-    <div
+    <div class="admin-section">
+      <h2>🧩 Riddles beheren</h2>
+      <div class="admin-links">
+        <a href="read_riddles.php">📋 Alle riddles bekijken</a>
+        <a href="create_riddle.php">➕ Nieuwe riddle toevoegen</a>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2>👥 Teams beheren</h2>
+      <div class="admin-links">
+        <a href="teams.php">📋 Alle teams bekijken</a>
+        <a href="scores.php">🏆 Scorepagina</a>
+      </div>
+    </div>
+
+    <div class="admin-section">
+      <h2>👤 Ingelogd als</h2>
+      <div class="admin-links">
+        <a href="#">👤 <?php echo htmlspecialchars($_SESSION['username']); ?></a>
+      </div>
+    </div>
+
+    <a href="../logout.php" class="logout">🚪 Uitloggen</a>
+  </div>
+
+</body>
+</html>
